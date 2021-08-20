@@ -3,4 +3,4 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-module.exports = validateEmail;
+module.exports = {validateEmail};

@@ -2,8 +2,7 @@ const { ObjectId } = require('mongodb');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const validateEmail = require('../helper/helper');
-const { json } = require('body-parser');
+const {validateEmail} = require('../helper/validation');
 
 
 class Controller {
@@ -30,7 +29,7 @@ class Controller {
             if(!data){
                 res.status(400).json('Username and Password not match')
             }else if(bcrypt.compareSync(password, data.password)){
-                let token = jwt.sign({id: data.id, email: data.email}, process.env.SECRET_KEY, {expiresIn: 60 * 60});
+                let token = jwt.sign({id: data._id, email: data.email}, process.env.SECRET_KEY, {expiresIn: 60 * 60});
                 res.status(200).json({token, email})
             }else{
                 res.status(400).json('Username and Password not match')
@@ -41,10 +40,9 @@ class Controller {
         })
     }
     static getAll(req, res){
-        User.findAll()
+        User.find()
         .then(data =>{
             res.status(200).json(data);
-
         })
         .catch(err =>{
             res.status(500).json(err);
