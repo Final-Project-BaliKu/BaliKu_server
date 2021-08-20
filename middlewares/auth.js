@@ -14,7 +14,7 @@ async function authentication(req, res, next){
                 await User.findOne({_id: ObjectId(token.id)})
                 .then(data =>{
                     if(data){
-                            req.user = {_id: data.id, email: data.email} 
+                            req.user = {id: data._id, email: data.email} 
                             next()
                     } else {
                         res.status(400).json('Invalid Authentication, Please login again !')

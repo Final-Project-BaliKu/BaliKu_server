@@ -1,6 +1,6 @@
 const { getDatabase } = require('../config')
 
-const collection = 'Users'
+const collection = 'Transactions'
 class Transaction {
     static find() {
         return getDatabase().collection(collection).find().toArray()
